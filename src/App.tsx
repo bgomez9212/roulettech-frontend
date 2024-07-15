@@ -29,7 +29,7 @@ export default function App() {
   return (
     <div className="px-20 py-10">
       {data.map((article: ArticleType) => (
-        <Article article={article} />
+        <Article key={article.id} article={article} />
       ))}
     </div>
   );

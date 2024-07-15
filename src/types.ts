@@ -1,4 +1,5 @@
 export type ArticleType = {
+  id: number;
   username: string;
   album_name: string;
   album_artist: string;
