@@ -27,7 +27,7 @@ export default function App() {
   }
 
   return (
-    <div className="px-20 py-10">
+    <div className="px-20 py-32">
       {data.map((article: ArticleType) => (
         <Article key={article.id} article={article} />
       ))}
