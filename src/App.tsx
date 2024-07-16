@@ -12,12 +12,12 @@ export default function App() {
     albumModalVisible: false,
     commentModalVisible: false,
   });
+  const [articleId, setArticleId] = useState<null | number>(null);
   const { isPending, error, data } = useQuery({
     queryKey: ["articles"],
     queryFn: () =>
       fetch("http://127.0.0.1:8000/demo/articles/").then((res) => res.json()),
   });
-
   if (isPending) {
     return (
       <div className="flex items-center justify-center pt-20">
@@ -41,11 +41,12 @@ export default function App() {
     });
   }
 
-  function toggleCommentModal() {
+  function toggleCommentModal(id: number | null) {
     setModalOpen({
       ...modalOpen,
       commentModalVisible: !modalOpen.commentModalVisible,
     });
+    setArticleId(id);
   }
 
   return (
@@ -55,14 +56,17 @@ export default function App() {
         <AddAlbumModal toggleModal={toggleAlbumModal} />
       )}
       {modalOpen.commentModalVisible && (
-        <CommentsModal toggleModal={toggleCommentModal} />
+        <CommentsModal
+          toggleModal={() => toggleCommentModal(null)}
+          articleId={articleId}
+        />
       )}
       <div className="px-20 py-32 grid grid-cols-3 gap-x-16 gap-y-16">
         {data.map((article: ArticleType) => (
           <Article
             key={article.id}
             article={article}
-            toggleCommentModal={toggleCommentModal}
+            toggleCommentModal={() => toggleCommentModal(article.id)}
           />
         ))}
       </div>
