@@ -4,9 +4,10 @@ import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 
 interface ArticleProps {
   article: ArticleType;
+  toggleCommentModal: () => void;
 }
 
-export default function Article({ article }: ArticleProps) {
+export default function Article({ article, toggleCommentModal }: ArticleProps) {
   return (
     <div className="py-[27px] px-[30px] flex flex-col w-96 border rounded-lg">
       <img className="mb-2" src={article.imageUrl} />
@@ -18,7 +19,7 @@ export default function Article({ article }: ArticleProps) {
           {article.likes}
         </div>
         <div>
-          <button>
+          <button onClick={toggleCommentModal}>
             <ChatOutlinedIcon />
           </button>
         </div>

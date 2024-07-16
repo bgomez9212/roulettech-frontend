@@ -5,9 +5,13 @@ import { ArticleType } from "./types";
 import { useState } from "react";
 import NavigationBar from "./components/NavigationBar";
 import AddAlbumModal from "./components/AddAlbumModal";
+import CommentsModal from "./components/CommentsModal";
 
 export default function App() {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState({
+    albumModalVisible: false,
+    commentModalVisible: false,
+  });
   const { isPending, error, data } = useQuery({
     queryKey: ["articles"],
     queryFn: () =>
@@ -30,17 +34,36 @@ export default function App() {
     );
   }
 
-  function toggleModal() {
-    setModalOpen(!modalOpen);
+  function toggleAlbumModal() {
+    setModalOpen({
+      ...modalOpen,
+      albumModalVisible: !modalOpen.albumModalVisible,
+    });
+  }
+
+  function toggleCommentModal() {
+    setModalOpen({
+      ...modalOpen,
+      commentModalVisible: !modalOpen.commentModalVisible,
+    });
   }
 
   return (
     <div>
-      <NavigationBar toggleModal={toggleModal} />
-      {modalOpen && <AddAlbumModal toggleModal={toggleModal} />}
+      <NavigationBar toggleModal={toggleAlbumModal} />
+      {modalOpen.albumModalVisible && (
+        <AddAlbumModal toggleModal={toggleAlbumModal} />
+      )}
+      {modalOpen.commentModalVisible && (
+        <CommentsModal toggleModal={toggleCommentModal} />
+      )}
       <div className="px-20 py-32 grid grid-cols-3 gap-x-16 gap-y-16">
         {data.map((article: ArticleType) => (
-          <Article key={article.id} article={article} />
+          <Article
+            key={article.id}
+            article={article}
+            toggleCommentModal={toggleCommentModal}
+          />
         ))}
       </div>
     </div>
