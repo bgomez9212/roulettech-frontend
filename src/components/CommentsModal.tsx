@@ -61,8 +61,8 @@ export default function CommentsModal({
         onClick={toggleModal}
         className="opacity-50 fixed top-0 start-0 z-[60] h-screen w-screen bg-black flex"
       />
-      <div className="h-1/2 w-3/4 bg-white border shadow-xl z-[70] rounded-lg flex items-center flex-col p-5">
-        <div className="h-2/3 overflow-scroll w-full flex flex-col-reverse">
+      <div className="h-1/2 w-3/4 bg-white border shadow-xl z-[70] rounded-lg flex items-center flex-col p-5 justify-between">
+        <div className="max-h-2/3 overflow-scroll w-full flex flex-col-reverse">
           {authorCommentError || commentsError ? (
             <p>There seems to be an error</p>
           ) : authorCommentPending || commentsPending ? (
