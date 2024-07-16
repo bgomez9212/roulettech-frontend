@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Comment from "./Comment";
 import { ArticleType, CommentType } from "../types";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -13,8 +13,7 @@ export default function CommentsModal({
   toggleModal,
   articleId,
 }: CommentsModalProps) {
-  console.log(articleId);
-
+  const queryClient = useQueryClient();
   const {
     data: authorComment,
     isPending: authorCommentPending,
@@ -43,8 +42,16 @@ export default function CommentsModal({
 
   const { register, handleSubmit } = useForm<CommentType>();
 
-  function onSubmit(data: CommentType) {
-    console.log(data);
+  async function onSubmit(data: CommentType) {
+    data.article_id = articleId;
+    await fetch(`http://127.0.0.1:8000/demo/comments/`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+    });
+    queryClient.invalidateQueries({ queryKey: ["comments"] });
   }
 
   return (

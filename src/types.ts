@@ -14,4 +14,5 @@ export type CommentType = {
   username: string;
   comment: string;
   date: string;
+  article_id: number | null;
 };
