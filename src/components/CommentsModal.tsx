@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import Comment from "./Comment";
 import { ArticleType, CommentType } from "../types";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useForm } from "react-hook-form";
 
 interface CommentsModalProps {
   toggleModal: () => void;
@@ -40,7 +41,11 @@ export default function CommentsModal({
     enabled: !!articleId,
   });
 
-  console.log(comments);
+  const { register, handleSubmit } = useForm<CommentType>();
+
+  function onSubmit(data: CommentType) {
+    console.log(data);
+  }
 
   return (
     <div className="top-0 start-0 flex justify-center items-center fixed h-screen w-screen z-[50] no-doc-scroll">
@@ -49,7 +54,7 @@ export default function CommentsModal({
         className="opacity-50 fixed top-0 start-0 z-[60] h-screen w-screen bg-black flex"
       />
       <div className="h-1/2 w-3/4 bg-white border shadow-xl z-[70] rounded-lg flex items-center flex-col p-5">
-        <div className="h-2/3 overflow-scroll">
+        <div className="h-2/3 overflow-scroll w-full">
           {authorCommentError || commentsError ? (
             <p>There seems to be an error</p>
           ) : authorCommentPending || commentsPending ? (
@@ -70,13 +75,18 @@ export default function CommentsModal({
             />
           ))}
         </div>
-        <form className="h-1/3 flex flex-col w-full rounded-md text-xs">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="h-1/3 flex flex-col w-full rounded-md text-xs"
+        >
           <textarea
+            {...register("comment")}
             className="border resize-none h-2/3 mb-2 p-2"
             placeholder="(share your thoughts)"
           />
           <div className="flex justify-between rounded-md">
             <input
+              {...register("username")}
               type="text"
               className="border px-2"
               placeholder="(comment as)"
