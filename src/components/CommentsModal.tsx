@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import Comment from "./Comment";
-import { ArticleType } from "../types";
+import { ArticleType, CommentType } from "../types";
 import ClipLoader from "react-spinners/ClipLoader";
 
 interface CommentsModalProps {
@@ -16,8 +16,8 @@ export default function CommentsModal({
 
   const {
     data: authorComment,
-    isPending,
-    error,
+    isPending: authorCommentPending,
+    error: authorCommentError,
   } = useQuery<ArticleType>({
     queryKey: ["authorComment"],
     queryFn: () =>
@@ -27,16 +27,31 @@ export default function CommentsModal({
     enabled: !!articleId,
   });
 
+  const {
+    data: comments,
+    isPending: commentsPending,
+    error: commentsError,
+  } = useQuery<CommentType[]>({
+    queryKey: ["comments"],
+    queryFn: () =>
+      fetch(`http://127.0.0.1:8000/demo/articles/${articleId}/comments`).then(
+        (res) => res.json()
+      ),
+    enabled: !!articleId,
+  });
+
+  console.log(comments);
+
   return (
     <div className="top-0 start-0 flex justify-center items-center fixed h-screen w-screen z-[50] no-doc-scroll">
       <div
         onClick={toggleModal}
         className="opacity-50 fixed top-0 start-0 z-[60] h-screen w-screen bg-black flex"
       />
-      <div className="h-1/2 w-3/4 bg-white border shadow-xl z-[70] rounded-lg flex items-center flex-col p-5">
-        {error ? (
+      <div className="h-1/2 w-3/4 bg-white border shadow-xl z-[70] rounded-lg flex items-center flex-col p-5 overflow-scroll">
+        {authorCommentError || commentsError ? (
           <p>There seems to be an error</p>
-        ) : isPending ? (
+        ) : authorCommentPending || commentsPending ? (
           <ClipLoader />
         ) : (
           <Comment
@@ -45,6 +60,14 @@ export default function CommentsModal({
             date={authorComment?.date.slice(0, 10)}
           />
         )}
+        {comments?.map((comment) => (
+          <Comment
+            key={comment.id}
+            author={comment.username}
+            comment={comment.comment}
+            date={comment.date.slice(0, 10)}
+          />
+        ))}
       </div>
     </div>
   );

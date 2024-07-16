@@ -8,3 +8,10 @@ export type ArticleType = {
   likes: number;
   date: string;
 };
+
+export type CommentType = {
+  id: number;
+  username: string;
+  comment: string;
+  date: string;
+};
