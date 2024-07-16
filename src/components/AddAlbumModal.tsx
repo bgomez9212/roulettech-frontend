@@ -1,18 +1,19 @@
 interface AddAlbumModalProps {
   toggleModal: () => void;
 }
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { ArticleType } from "../types";
 
 export default function AddAlbumModal({ toggleModal }: AddAlbumModalProps) {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<ArticleType>();
-  function onSubmit(data: ArticleType) {
-    console.log(data);
+  const { register, handleSubmit } = useForm<ArticleType>();
+  async function onSubmit(data: ArticleType) {
+    await fetch("http://127.0.0.1:8000/demo/articles/", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+    });
   }
   return (
     <div className="top-0 start-0 flex justify-center items-center fixed h-screen w-screen z-[50] no-doc-scroll">
@@ -56,7 +57,7 @@ export default function AddAlbumModal({ toggleModal }: AddAlbumModalProps) {
             />
           </div>
           <input
-            className="border rounded-lg p-2 bg-black text-white w-1/4 mt-5"
+            className="border rounded-lg p-2 bg-black text-white w-1/4 mt-5 cursor-pointer"
             type="submit"
           />
         </form>
