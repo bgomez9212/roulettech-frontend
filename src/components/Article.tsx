@@ -26,7 +26,9 @@ export default function Article({ article }: ArticleProps) {
       <p className="font-bold text-2xl">{article.album_name}</p>
       <p className="italic pb-2">{article.album_artist}</p>
       <p>{article.username} says:</p>
-      <p>"{article.article_text}"</p>
+      <div className="h-[190px] overflow-scroll ">
+        <p>"{article.article_text}"</p>
+      </div>
     </div>
   );
 }
