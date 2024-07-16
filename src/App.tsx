@@ -38,7 +38,7 @@ export default function App() {
     <div>
       <NavigationBar toggleModal={toggleModal} />
       {modalOpen && <AddAlbumModal toggleModal={toggleModal} />}
-      <div className="px-20 py-32 grid grid-cols-3 gap-3">
+      <div className="px-20 py-32 grid grid-cols-3 gap-x-16 gap-y-16">
         {data.map((article: ArticleType) => (
           <Article key={article.id} article={article} />
         ))}

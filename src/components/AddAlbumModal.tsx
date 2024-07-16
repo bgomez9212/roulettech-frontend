@@ -3,8 +3,11 @@ interface AddAlbumModalProps {
 }
 import { useForm } from "react-hook-form";
 import { ArticleType } from "../types";
-
+import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 export default function AddAlbumModal({ toggleModal }: AddAlbumModalProps) {
+  const [successMessage, setSuccessMessage] = useState(false);
+  const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm<ArticleType>();
   async function onSubmit(data: ArticleType) {
     await fetch("http://127.0.0.1:8000/demo/articles/", {
@@ -14,6 +17,8 @@ export default function AddAlbumModal({ toggleModal }: AddAlbumModalProps) {
         "Content-Type": "application/json; charset=UTF-8",
       },
     });
+    queryClient.invalidateQueries({ queryKey: ["articles"] });
+    setSuccessMessage(true);
   }
   return (
     <div className="top-0 start-0 flex justify-center items-center fixed h-screen w-screen z-[50] no-doc-scroll">
@@ -56,10 +61,14 @@ export default function AddAlbumModal({ toggleModal }: AddAlbumModalProps) {
               {...register("article_text")}
             />
           </div>
-          <input
-            className="border rounded-lg p-2 bg-black text-white w-1/4 mt-5 cursor-pointer"
-            type="submit"
-          />
+          {successMessage ? (
+            <p className="p-2">Thank you for your submission!</p>
+          ) : (
+            <input
+              className="border rounded-lg p-2 bg-black text-white w-1/4 mt-5 cursor-pointer"
+              type="submit"
+            />
+          )}
         </form>
       </div>
     </div>
