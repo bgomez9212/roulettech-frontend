@@ -42,6 +42,7 @@ export default function CommentsModal({
           <Comment
             author={authorComment?.username}
             comment={authorComment?.article_text}
+            date={authorComment?.date.slice(0, 10)}
           />
         )}
       </div>
