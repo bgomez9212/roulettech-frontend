@@ -48,26 +48,42 @@ export default function CommentsModal({
         onClick={toggleModal}
         className="opacity-50 fixed top-0 start-0 z-[60] h-screen w-screen bg-black flex"
       />
-      <div className="h-1/2 w-3/4 bg-white border shadow-xl z-[70] rounded-lg flex items-center flex-col p-5 overflow-scroll">
-        {authorCommentError || commentsError ? (
-          <p>There seems to be an error</p>
-        ) : authorCommentPending || commentsPending ? (
-          <ClipLoader />
-        ) : (
-          <Comment
-            author={authorComment?.username}
-            comment={authorComment?.article_text}
-            date={authorComment?.date.slice(0, 10)}
+      <div className="h-1/2 w-3/4 bg-white border shadow-xl z-[70] rounded-lg flex items-center flex-col p-5">
+        <div className="h-2/3 overflow-scroll">
+          {authorCommentError || commentsError ? (
+            <p>There seems to be an error</p>
+          ) : authorCommentPending || commentsPending ? (
+            <ClipLoader />
+          ) : (
+            <Comment
+              author={authorComment?.username}
+              comment={authorComment?.article_text}
+              date={authorComment?.date.slice(0, 10)}
+            />
+          )}
+          {comments?.map((comment) => (
+            <Comment
+              key={comment.id}
+              author={comment.username}
+              comment={comment.comment}
+              date={comment.date.slice(0, 10)}
+            />
+          ))}
+        </div>
+        <form className="h-1/3 flex flex-col w-full rounded-md text-xs">
+          <textarea
+            className="border resize-none h-2/3 mb-2 p-2"
+            placeholder="(share your thoughts)"
           />
-        )}
-        {comments?.map((comment) => (
-          <Comment
-            key={comment.id}
-            author={comment.username}
-            comment={comment.comment}
-            date={comment.date.slice(0, 10)}
-          />
-        ))}
+          <div className="flex justify-between rounded-md">
+            <input
+              type="text"
+              className="border px-2"
+              placeholder="(comment as)"
+            />
+            <input type="submit" className="bg-black text-white text-lg px-2" />
+          </div>
+        </form>
       </div>
     </div>
   );

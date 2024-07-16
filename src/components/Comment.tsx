@@ -6,12 +6,12 @@ interface CommentProps {
 
 export default function Comment({ author, comment, date }: CommentProps) {
   return (
-    <div className="w-full">
+    <div className="w-full text-xs pb-2">
       <div className="flex justify-between">
         <p className="font-bold">{author}</p>
         <p className="italic">{date}</p>
       </div>
-      <p className="text-sm">{comment}</p>
+      <p>{comment}</p>
     </div>
   );
 }
