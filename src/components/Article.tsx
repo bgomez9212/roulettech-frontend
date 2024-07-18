@@ -32,7 +32,7 @@ export default function Article({ article, toggleCommentModal }: ArticleProps) {
   }
 
   return (
-    <div className="py-[27px] px-[30px] flex flex-col w-96 border rounded-lg">
+    <div className="py-7 px-8 mb-10 md:mb-0 flex flex-col border rounded-lg bg-white">
       <img className="mb-2" src={article.imageUrl} />
       <div className="flex justify-between">
         <div className="flex justify-center items-center mb-2">
@@ -50,7 +50,7 @@ export default function Article({ article, toggleCommentModal }: ArticleProps) {
       <p className="font-bold text-2xl">{article.album_name}</p>
       <p className="italic pb-2">{article.album_artist}</p>
       <p>{article.username} says:</p>
-      <div className="h-[190px] overflow-scroll ">
+      <div className="h-44 overflow-scroll ">
         <p>"{article.article_text}"</p>
       </div>
     </div>

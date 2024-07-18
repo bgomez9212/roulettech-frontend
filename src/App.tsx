@@ -61,14 +61,17 @@ export default function App() {
           articleId={articleId}
         />
       )}
-      <div className="px-20 py-32 grid grid-cols-3 gap-x-16 gap-y-16">
-        {data.map((article: ArticleType) => (
-          <Article
-            key={article.id}
-            article={article}
-            toggleCommentModal={() => toggleCommentModal(article.id)}
-          />
-        ))}
+      <div className="md:px-20 px-5 py-32 md:grid md:grid-cols-2 xl:grid-cols-3 gap-x-16 gap-y-16">
+        {data
+          ?.slice(0)
+          .reverse()
+          .map((article: ArticleType) => (
+            <Article
+              key={article.id}
+              article={article}
+              toggleCommentModal={() => toggleCommentModal(article.id)}
+            />
+          ))}
       </div>
     </div>
   );

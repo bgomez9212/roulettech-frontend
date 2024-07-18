@@ -26,14 +26,14 @@ export default function AddAlbumModal({ toggleModal }: AddAlbumModalProps) {
         onClick={toggleModal}
         className="opacity-50 fixed top-0 start-0 z-[60] h-screen w-screen bg-black flex"
       />
-      <div className="h-1/2 w-3/4 bg-white border shadow-xl z-[70] rounded-lg flex justify-center items-center flex-col">
-        <p className="font-bold text-2xl pb-5">Add an album</p>
+      <div className="h-3/4 md:h-1/2 w-2/3 bg-white border shadow-xl z-[70] rounded-lg flex justify-center items-center flex-col">
+        <p className="font-bold text-2xl pb-5 pt-5">Add an album</p>
         <form
-          className="flex flex-col w-full justify-center items-center"
+          className="flex flex-col w-full justify-center items-center h-full"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex w-full items-center justify-center">
-            <div className="flex flex-col gap-4 mr-3 w-1/3">
+          <div className="flex md:flex-row flex-col w-full items-center justify-center px-4">
+            <div className="flex flex-col gap-2 md:gap-4 md:mr-3 mr-0 md:w-1/2 justify-between md:h-full mb-2 md:mb-0">
               <input
                 className="border rounded-lg p-2"
                 placeholder="username"
@@ -56,7 +56,7 @@ export default function AddAlbumModal({ toggleModal }: AddAlbumModalProps) {
               />
             </div>
             <textarea
-              className="resize-none border rounded-lg w-1/3 h-full p-2"
+              className="resize-none border rounded-lg md:w-1/2 md:h-full p-2 h-60"
               placeholder="share your thoughts"
               {...register("article_text")}
             />

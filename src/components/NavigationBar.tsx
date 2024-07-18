@@ -5,7 +5,7 @@ interface NavigationBarProps {
 export default function NavigationBar({ toggleModal }: NavigationBarProps) {
   return (
     <div>
-      <div className="h-20 border flex flex-row justify-between px-20 items-center fixed bg-white w-[100vw]">
+      <div className="h-20 border flex flex-row justify-between px-5 md:px-20 items-center fixed bg-white w-[100vw]">
         <h1>Absolute Albums</h1>
         <button
           onClick={toggleModal}
