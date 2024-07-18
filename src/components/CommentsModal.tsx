@@ -94,17 +94,20 @@ export default function CommentsModal({
         >
           <textarea
             {...register("comment")}
-            className="border resize-none h-2/3 mb-2 p-2"
+            className="border resize-none h-2/3 mb-2 p-2 rounded-md"
             placeholder="(share your thoughts)"
           />
-          <div className="flex justify-between rounded-md">
+          <div className="flex justify-between">
             <input
               {...register("username")}
               type="text"
-              className="border px-2"
+              className="border px-2 rounded-md"
               placeholder="(comment as)"
             />
-            <input type="submit" className="bg-black text-white text-lg px-2" />
+            <input
+              type="submit"
+              className="bg-black text-white text-lg px-2 rounded-md"
+            />
           </div>
         </form>
       </div>
