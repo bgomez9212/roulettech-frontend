@@ -1,6 +1,8 @@
 import { ArticleType } from "../types";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useState } from "react";
 
 interface ArticleProps {
   article: ArticleType;
@@ -8,13 +10,34 @@ interface ArticleProps {
 }
 
 export default function Article({ article, toggleCommentModal }: ArticleProps) {
+  const [liked, setLiked] = useState(false);
+  async function updateLikes() {
+    if (liked) {
+      article.likes -= 1;
+    } else {
+      article.likes += 1;
+    }
+    await fetch(`http://127.0.0.1:8000/demo/articles/${article.id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ likes: article.likes }),
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+    });
+  }
+
+  function handleClick() {
+    setLiked(!liked);
+    updateLikes();
+  }
+
   return (
     <div className="py-[27px] px-[30px] flex flex-col w-96 border rounded-lg">
       <img className="mb-2" src={article.imageUrl} />
       <div className="flex justify-between">
         <div className="flex justify-center items-center mb-2">
-          <button>
-            <FavoriteBorderIcon />
+          <button onClick={handleClick}>
+            {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </button>
           {article.likes}
         </div>
