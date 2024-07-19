@@ -3,6 +3,7 @@ import Comment from "./Comment";
 import { ArticleType, CommentType } from "../types";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useForm } from "react-hook-form";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface CommentsModalProps {
   toggleModal: () => void;
@@ -21,7 +22,7 @@ export default function CommentsModal({
   } = useQuery<ArticleType>({
     queryKey: ["authorComment"],
     queryFn: () =>
-      fetch(`http://127.0.0.1:8000/demo/articles/${articleId}`).then((res) =>
+      fetch(`${import.meta.env.VITE_GET_ARTICLES}${articleId}`).then((res) =>
         res.json()
       ),
     enabled: !!articleId,
@@ -34,7 +35,7 @@ export default function CommentsModal({
   } = useQuery<CommentType[]>({
     queryKey: ["comments"],
     queryFn: () =>
-      fetch(`http://127.0.0.1:8000/demo/articles/${articleId}/comments`).then(
+      fetch(`${import.meta.env.VITE_GET_ARTICLES}${articleId}/comments`).then(
         (res) => res.json()
       ),
     enabled: !!articleId,
@@ -44,7 +45,7 @@ export default function CommentsModal({
 
   async function onSubmit(data: CommentType) {
     data.article_id = articleId;
-    await fetch(`http://127.0.0.1:8000/demo/comments/`, {
+    await fetch(`${import.meta.env.VITE_GET_COMMENTS}`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -62,7 +63,10 @@ export default function CommentsModal({
         className="opacity-50 fixed top-0 start-0 z-[60] h-screen w-screen bg-black flex"
       />
       <div className="h-1/2 w-3/4 bg-white border shadow-xl z-[70] rounded-lg flex items-center flex-col p-5 justify-between">
-        <div className="max-h-2/3 overflow-scroll w-full flex flex-col-reverse">
+        <div className="w-full flex justify-end">
+          <CloseIcon className="cursor-pointer" onClick={toggleModal} />
+        </div>
+        <div className="h-2/3 overflow-scroll w-full flex flex-col-reverse">
           {authorCommentError || commentsError ? (
             <p>There seems to be an error</p>
           ) : authorCommentPending || commentsPending ? (
@@ -106,7 +110,7 @@ export default function CommentsModal({
             />
             <input
               type="submit"
-              className="bg-black text-white text-lg px-2 rounded-md"
+              className="bg-black text-white text-lg px-2 rounded-md cursor-pointer hover:opacity-50"
             />
           </div>
         </form>
