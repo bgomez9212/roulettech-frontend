@@ -18,7 +18,7 @@ export default function Article({ article, toggleCommentModal }: ArticleProps) {
     } else {
       article.likes += 1;
     }
-    await fetch(`${import.meta.env.VITE_GET_ARTICLES}/${article.id}`, {
+    await fetch(`${import.meta.env.VITE_GET_ARTICLES}${article.id}`, {
       method: "PATCH",
       body: JSON.stringify({ likes: article.likes }),
       headers: {
