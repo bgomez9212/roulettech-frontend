@@ -18,7 +18,7 @@ export default function Article({ article, toggleCommentModal }: ArticleProps) {
     } else {
       article.likes += 1;
     }
-    await fetch(`http://127.0.0.1:8000/demo/articles/${article.id}`, {
+    await fetch(`${import.meta.env.VITE_GET_ARTICLES}/${article.id}`, {
       method: "PATCH",
       body: JSON.stringify({ likes: article.likes }),
       headers: {
@@ -30,7 +30,7 @@ export default function Article({ article, toggleCommentModal }: ArticleProps) {
   const { data } = useQuery<[CommentType]>({
     queryKey: ["numOfComments", article.id],
     queryFn: () =>
-      fetch(`http://127.0.0.1:8000/demo/articles/${article.id}/comments`).then(
+      fetch(`${import.meta.env.VITE_GET_ARTICLES}${article.id}/comments`).then(
         (res) => res.json()
       ),
   });

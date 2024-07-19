@@ -10,7 +10,7 @@ export default function AddAlbumModal({ toggleModal }: AddAlbumModalProps) {
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm<ArticleType>();
   async function onSubmit(data: ArticleType) {
-    await fetch("http://127.0.0.1:8000/demo/articles/", {
+    await fetch(`${import.meta.env.VITE_GET_ARTICLES}`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

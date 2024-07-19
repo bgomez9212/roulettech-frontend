@@ -21,7 +21,7 @@ export default function CommentsModal({
   } = useQuery<ArticleType>({
     queryKey: ["authorComment"],
     queryFn: () =>
-      fetch(`http://127.0.0.1:8000/demo/articles/${articleId}`).then((res) =>
+      fetch(`${import.meta.env.VITE_GET_ARTICLES}${articleId}`).then((res) =>
         res.json()
       ),
     enabled: !!articleId,
@@ -34,7 +34,7 @@ export default function CommentsModal({
   } = useQuery<CommentType[]>({
     queryKey: ["comments"],
     queryFn: () =>
-      fetch(`http://127.0.0.1:8000/demo/articles/${articleId}/comments`).then(
+      fetch(`${import.meta.env.VITE_GET_ARTICLES}${articleId}/comments`).then(
         (res) => res.json()
       ),
     enabled: !!articleId,
@@ -44,7 +44,7 @@ export default function CommentsModal({
 
   async function onSubmit(data: CommentType) {
     data.article_id = articleId;
-    await fetch(`http://127.0.0.1:8000/demo/comments/`, {
+    await fetch(`${import.meta.env.VITE_GET_COMMENTS}`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
