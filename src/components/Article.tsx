@@ -54,7 +54,7 @@ export default function Article({ article, toggleCommentModal }: ArticleProps) {
           <button className="hover:opacity-50" onClick={toggleCommentModal}>
             <ChatOutlinedIcon />
           </button>
-          ({data?.length})
+          ({data?.length ? data.length + 1 : 1})
         </div>
       </div>
       <p className="font-bold text-2xl">{article.album_name}</p>
