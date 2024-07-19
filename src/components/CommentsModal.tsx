@@ -53,6 +53,7 @@ export default function CommentsModal({
       },
     });
     queryClient.invalidateQueries({ queryKey: ["comments"] });
+    queryClient.invalidateQueries({ queryKey: ["numOfComments"] });
     reset();
   }
 

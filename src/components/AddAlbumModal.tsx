@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function AddAlbumModal({ toggleModal }: AddAlbumModalProps) {
   const [successMessage, setSuccessMessage] = useState(false);
   const queryClient = useQueryClient();
-  const { register, handleSubmit } = useForm<ArticleType>();
+  const { register, handleSubmit, reset } = useForm<ArticleType>();
   async function onSubmit(data: ArticleType) {
     await fetch(`${import.meta.env.VITE_GET_ARTICLES}`, {
       method: "POST",
@@ -18,6 +18,7 @@ export default function AddAlbumModal({ toggleModal }: AddAlbumModalProps) {
       },
     });
     queryClient.invalidateQueries({ queryKey: ["articles"] });
+    reset();
     setSuccessMessage(true);
   }
   return (
