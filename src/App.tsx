@@ -16,7 +16,7 @@ export default function App() {
   const { isPending, error, data } = useQuery({
     queryKey: ["articles"],
     queryFn: () =>
-      fetch("http://127.0.0.1:8000/demo/articles/").then((res) => res.json()),
+      fetch(`${import.meta.env.VITE_GET_ARTICLES}`).then((res) => res.json()),
   });
   if (isPending) {
     return (
